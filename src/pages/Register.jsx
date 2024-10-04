@@ -60,7 +60,7 @@ export default function Register() {
     }
   };
   return (
-    <div className="flex justify-center items-center relative h-screen px-10 ">
+    <>
       <img
         src={background}
         alt=""
@@ -127,6 +127,6 @@ export default function Register() {
           </Link>
         </div>
       </Card>
-    </div>
+    </>
   );
 }

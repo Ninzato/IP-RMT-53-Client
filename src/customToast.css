@@ -1,0 +1,36 @@
+.Toastify__toast {
+  border-radius: 0px;
+  padding-inline: 2rem;
+  padding-block: 1rem;
+  background-color: #fefcd0;
+
+  padding: 10px 10px;
+  position: relative;
+  background: black;
+  width: auto;
+  z-index: 2;
+}
+
+.Toastify__toast::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: -10px;
+  right: -10px;
+  background: black;
+  z-index: -1;
+}
+
+.Toastify__toast::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: -6px;
+  right: -6px;
+  background: black;
+  z-index: -1;
+}

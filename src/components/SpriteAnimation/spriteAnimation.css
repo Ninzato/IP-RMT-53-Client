@@ -1,0 +1,58 @@
+.player-idle {
+  width: 185.7px;
+  height: 130px;
+  background-image: url("../../assets/char-idle.png");
+  background-repeat: no-repeat;
+  animation: player 1s steps(6) infinite;
+}
+
+.player-attack {
+  width: 185.7px;
+  height: 130px;
+  background-image: url("../../assets/char-srs.png");
+  background-repeat: no-repeat;
+  animation: player 1s steps(6) infinite;
+}
+
+.enemy-idle {
+  width: 185.7px;
+  height: 130px;
+  background-image: url("../../assets/enemy-idle.png");
+  background-repeat: no-repeat;
+  animation: enemy 1s steps(6) infinite;
+}
+
+.enemy-attack {
+  width: 185.7px;
+  height: 130px;
+  background-image: url("../../assets/enemy-attack.png");
+  background-repeat: no-repeat;
+  animation: enemy 1s steps(6) infinite;
+}
+
+@keyframes player {
+  100% {
+    background-position: -1108px 0px;
+  }
+}
+
+@keyframes enemy {
+  100% {
+    background-position: -1136.6px 0px;
+  }
+  /* 80% {
+    background-position: -950.9px 0px;
+  }
+  60% {
+    background-position: -765.2px 0px;
+  }
+  40% {
+    background-position: -579.5px 0px;
+  }
+  20% {
+    background-position: -393.8px 0px;
+  }
+  0% {
+    background-position: -208.1px 0px;
+  } */
+}

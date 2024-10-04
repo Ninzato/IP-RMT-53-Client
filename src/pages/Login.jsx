@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Card, Input } from "pixel-retroui";
 import { toast } from "react-toastify";
 import background from "../assets/register-background.jpg";
@@ -24,11 +24,11 @@ export default function Login() {
           password: input.password,
         },
       });
-
+      console.log(data, "DATA");
       localStorage.setItem("access_token", data.access_token);
       localStorage.setItem("identifier", data.id);
 
-      navigate("/homepage");
+      navigate("/");
     } catch (err) {
       console.log(err);
       toast.error(err.response?.data?.message || err.message, {
@@ -43,8 +43,38 @@ export default function Login() {
       });
     }
   };
+
+  async function handleCredentialResponse(response) {
+    console.log("Encoded JWT ID token: " + response.credential);
+    try {
+      const { data } = await instance({
+        method: "POST",
+        url: "/auth/login/google",
+        headers: {
+          google_token: response.credential,
+        },
+      });
+      localStorage.setItem("access_token", data.access_token);
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  useEffect(() => {
+    window.google.accounts.id.initialize({
+      client_id:
+        "1010393709537-u2k11bdgbotnt6q50g9glr15ofl4bcu5.apps.googleusercontent.com",
+      callback: handleCredentialResponse,
+    });
+    window.google.accounts.id.renderButton(
+      document.getElementById("buttonDiv"),
+      { theme: "outline", size: "large" } // customization attributes
+    );
+    // window.google.accounts.id.prompt();
+  }, []);
   return (
-    <div className="flex justify-center items-center relative h-screen px-10 ">
+    <>
       <img
         src={background}
         alt=""
@@ -98,7 +128,17 @@ export default function Login() {
             - Sign Up -
           </Link>
         </div>
+
+        <Card
+          bg="white"
+          textColor="black"
+          borderColor="black"
+          shadowColor="black"
+          className="w-fit mx-auto mt-5"
+        >
+          <div id="buttonDiv" className="flex-1"></div>
+        </Card>
       </Card>
-    </div>
+    </>
   );
 }
