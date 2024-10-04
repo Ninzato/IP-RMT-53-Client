@@ -8,8 +8,10 @@ import { fetchCharacter } from "../features/character/characterSlice";
 import { fetchRace } from "../features/race/raceSlice";
 import { fetchOccupation } from "../features/occupation/occupationSlice";
 import background from "../assets/homepage-background.jpg";
+import axios from "axios";
 
 export default function Detailpage() {
+  const [additionalData, setAdditionalData] = useState(null);
   const { character } = useSelector((store) => store.character);
   const races = useSelector((store) => store.race.race);
   const occupations = useSelector((store) => store.occupation.occupation);
@@ -29,8 +31,20 @@ export default function Detailpage() {
           Authorization: "Bearer " + localStorage.getItem("access_token"),
         },
       });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-      console.log(data, "DATA");
+  const fetchAdditionalData = async () => {
+    try {
+      if (race) {
+        const { data } = await axios({
+          method: "GET",
+          url: `https://www.dnd5eapi.co/api/races/${race.index}`,
+        });
+        setAdditionalData(data);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -42,6 +56,10 @@ export default function Detailpage() {
     dispatch(fetchOccupation());
     fetchBattles();
   }, []);
+
+  useEffect(() => {
+    fetchAdditionalData();
+  }, [race]);
 
   const backToHome = () => {
     navigate("/");
@@ -89,6 +107,10 @@ export default function Detailpage() {
             <p>
               <span className="font-bold ita">RACE: </span>
               <span className="text-[14px]">{race?.name}</span>
+            </p>
+            <p>
+              <span className="font-bold ita">SPEED: </span>
+              <span className="text-[14px]">{additionalData?.speed}</span>
             </p>
             <p>
               <span className="font-bold ita">OCCUPATION: </span>
